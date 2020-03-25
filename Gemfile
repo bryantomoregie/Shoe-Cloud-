@@ -6,3 +6,4 @@ gem 'rake', "~>12.3.1"
 gem 'require_all'
 gem 'sqlite3'
 gem 'pry'
+gem 'tty-prompt'
