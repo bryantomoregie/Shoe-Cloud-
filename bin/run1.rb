@@ -5,14 +5,14 @@ def start_app
     if user_input 
         new_user
     else
-        third_method
+        puts "isok"
     end
 end
 
 def new_user
     user_name = $prompt.ask('What is your name?', default: ENV['USER'])
     puts user_name
-    user_email = $prompt.ask('What is your email?'), default: ENV['USER'])
+    user_email = $prompt.ask('What is your email?', default: ENV['USER'])
     puts user_email
     user_username = $prompt.ask('Enter your username', default: ENV['USER'])
     puts user_username
@@ -22,4 +22,41 @@ def new_user
 end
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
