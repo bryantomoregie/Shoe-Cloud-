@@ -5,11 +5,12 @@ $total_price = []
         choice = $prompt.select('','Browse shoes','See virtual closet',"Checkout","Exit")
         case choice
         when 'Browse shoes'
+            catalog
             list_of_shoes
         when 'See virtual closet'
             "purchases"
         when "Exit"
-            puts "Method 3"
+            start_app
         when "Checkout"
             puts "Method to pay"
         end
@@ -38,6 +39,12 @@ $total_price = []
                     p pay_total 
                     checkout
             end 
+        end
+    end
+    
+    def catalog
+        Shoe.all.map do |shoe|
+           p shoe
         end
     end
 
