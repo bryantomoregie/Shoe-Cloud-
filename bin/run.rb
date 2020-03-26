@@ -1,5 +1,6 @@
 require_relative '../config/environment.rb'
 require_relative "./run1.rb"
+require_relative "./run2.rb"
 require "pry"
 
  $prompt = TTY::Prompt.new

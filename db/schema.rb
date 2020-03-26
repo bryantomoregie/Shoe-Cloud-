@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_211416) do
   end
 
   create_table "shoes", force: :cascade do |t|
-    t.string "type"
+    t.string "category"
     t.float "price"
     t.string "color"
   end
