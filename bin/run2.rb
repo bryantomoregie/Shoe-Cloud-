@@ -1,3 +1,5 @@
+$cart = []
+$total_price = []
 
     def go_to
         choice = $prompt.select('','Browse shoes','See virtual closet',"Checkout","Exit")
@@ -11,7 +13,6 @@
         when "Checkout"
             puts "Method to pay"
         end
-
     end
   
 
@@ -21,101 +22,55 @@
         Shoe.all.each do |shoe|
             shoe_list << shoe.category
         end
-        choice = $prompt.select("What kind of shoes are you looking for?", shoe_list.uniq)
+        selected_category = $prompt.select("What kind of shoes are you looking for?", shoe_list.uniq)
+        user_input = $prompt.yes?('Do you want put this item in your cart?')
+        if user_input
+            $cart << Shoe.find_by(category:selected_category)
+        
+            puts "Your item has been added to the cart!"
+            choice = $prompt.select('Do you want to continue shopping or checkout?', ["Keep shopping!", "Purchase my new shoes!"])
+            case choice 
+                when "Keep shopping!"
+                    list_of_shoes 
+                when "Purchase my new shoes!"
+                    p $cart
+                    print "Your total is "
+                    p pay_total 
+                    checkout
+            end 
+        end
+    end
+
+    def checkout
+        choice = $prompt.select('Do you want to make any changes to cart before you purchase? This will be your last chance to do so...', ["Remove items from cart", "Add more items", "Purchase my new shoes!"])
         case choice 
-        when "Ranger Boots"
-            user_input = $prompt.yes?('Do you want put this item in your cart?')
-            puts user_input
-            if user_input
-                  @@usercart << "Ranger Boots"
-            else
-                 promp_shoes
+        when "Remove items from cart"
+            p $cart 
+            puts "Which items would you like to remove?" 
+            shoe_list = []
+            $cart.each do |shoe|
+                shoe_list << shoe.category
             end
-         when "Viper Boots"
-             p 2
-         when "Leather Boots"
-             p 3
-         when "Nike Sneakers"
-             p 4 
-         when "Addidas Sneakers"
-             p 5 
-         when "Pirma Sneakers"
-             p 6 
-         when "Converse Sneakers"
-             p 7 
-         when "Light-bolt Sneakers"
-             p 8 
-         when "Victoria Heels"
-             p 9 
-         when "Shoshana Heels"
-             p 10
-         end
+            selected_category = $prompt.select("What item do you want to remove?", shoe_list)
+            $cart = $cart.select do |shoe|
+                shoe.category != selected_category
+            end 
+            p $cart 
+            checkout
+
+        when "Purchase my new shoes!"
+            p pay_total
+        when "Add more items"
+            list_of_shoes 
     end
 
-    # def prompt_shoes
-    #     choice = $prompt.select('Choose your shoes',"Ranger Boots","Viper Boots","Leather Boots","Nike Sneakers","Addidas Sneakers","Pirma Sneakers","Converse Sneakers","Light-bolt Sneakers","Victoria Heels","Shoshana Heels")
-    #     case choice
-    #     when "Ranger Boots"
-    #        user_input = $prompt.yes?('Do you want put this item in your cart?')
-    #        puts user_input
-    #        if user_input
-    #              @@usercart << "Ranger Boots"
-    #        else
-    #             promp_shoes
-    #        end
-    #     when "Viper Boots"
-    #         p 2
-    #     when "Leather Boots"
-    #         p 3
-    #     when "Nike Sneakers"
-    #         p 4 
-    #     when "Addidas Sneakers"
-    #         p 5 
-    #     when "Pirma Sneakers"
-    #         p 6 
-    #     when "Converse Sneakers"
-    #         p 7 
-    #     when "Light-bolt Sneakers"
-    #         p 8 
-    #     when "Victoria Heels"
-    #         p 9 
-    #     when "Shoshana Heels"
-    #         p 10
-    #     end
-    # end
+end
 
-
-
-
-    def start_app
-        puts "Welcome to Shoe-Cloud! Your personal online closet!"
-        user_input = $prompt.yes?('Are you a new user')
-        puts user_input
-        if user_input 
-            new_user
-        else
-            puts "isok"
-        end
+def pay_total
+    total = 0.00
+    $cart.each do  |item|
+        total += item.price 
     end
+    total.round(2)
 
-    def start_app
-        puts "Welcome to Shoe-Cloud! Your personal online closet!"
-        user_input = $prompt.yes?('Are you a new user')
-        puts user_input
-        if user_input 
-            new_user
-        else
-            puts "isok"
-        end
-    end
-
-  # $prompt.select("What kind of shoes are you looking for?", shoe_list.uniq)
-            # when 'Browse shoes'
-            #     list_of_shoes
-            #  when 'See virtual closet'
-            #     "cart"
-            # when "Exit"
-            #     puts "Method 3"
-            # when "Checkout"
-            #     puts "Method to pay"
-        # end
+end
