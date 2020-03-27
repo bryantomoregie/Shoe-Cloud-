@@ -67,11 +67,14 @@ $total_price = []
 
         when "Purchase my new shoes!"
             p pay_total
+            $cart.each do |item|
+                Purchase.create({shoe_id:item.id,user_id:$currentuser.id})
+            end
         when "Add more items"
             list_of_shoes 
-    end
+         end
 
-end
+    end
 
 def pay_total
     total = 0.00
