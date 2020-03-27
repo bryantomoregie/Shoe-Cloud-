@@ -1,9 +1,9 @@
 
-
 def start_app
-    puts "Welcome to Shoe-Cloud! Your personal online closet!"
+    
+    puts $a.asciify("Welcome to Shoe-Cloud!")
+    puts "Your personal online closet!"
     user_input = $prompt.yes?('Are you a new user')
-    puts user_input
     if user_input 
         new_user
     else
@@ -21,7 +21,7 @@ def new_user
     user_password = $prompt.mask('Enter your password', default: ENV['USER'])
      puts user_name
 
-    User.create({name: user_name, email_address: user_email, username: user_username, password: user_password})
+    $currentuser = User.create({name: user_name, email_address: user_email, username: user_username, password: user_password})
     go_to
 end
 
@@ -33,6 +33,7 @@ end
         if(user != nil)
             unique_password = $prompt.mask('What is your password')
             if(unique_password ==  user.password)
+                $currentuser = user
                 go_to
             else
                 puts "Invalid password,try again"
@@ -55,8 +56,4 @@ end
         User.all.map do |user|
             p user.password
         end
-
-
-    end
-
-
+    end 
