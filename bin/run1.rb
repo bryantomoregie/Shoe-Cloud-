@@ -6,7 +6,6 @@ def start_app
     puts $a.asciify("Welcome to Shoe-Cloud!")
     puts "Your personal online closet!"
     user_input = $prompt.yes?('Are you a new user')
-    puts user_input
     if user_input 
         new_user
     else
